@@ -361,10 +361,10 @@ void experimentalAnalysis(){
         //alg3_avg /= 10;
         alg4_avg /= 10;
         
-        cout<<"Algorithm 1, n="<<n<<": "<<((double)alg1)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-        cout<<"Algorithm 2, n="<<n<<": "<<((double)alg2)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 1, n="<<n<<": "<<((long double)alg1)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 2, n="<<n<<": "<<((long double)alg2)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
         //cout<<"Algorithm 3, n="<<n<<": "<<((double)alg3)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-        cout<<"Algorithm 4, n="<<n<<": "<<((double)alg4)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 4, n="<<n<<": "<<((long double)alg4)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
 
         alg1_avg = 0;
         alg2_avg = 0;
