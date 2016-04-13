@@ -1,7 +1,8 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cstdlib>
-#include <string.h>
+#include <string>
+#include <cstring>
 #include <limits>
 #include <vector>
 #include <algorithm>
@@ -44,17 +45,17 @@ int main(){
 	numArray.push_back(-23);
 	numArray.push_back(84);
 
-	alg1 = max_subarray_enumeration(numArray);
-	cout << alg1.maxSum << " ";
+	// alg1 = max_subarray_enumeration(numArray);
+	// cout << alg1.maxSum << " ";
 
-	alg2 = max_better_enumeration_subarray(numArray);
-	cout << alg2.maxSum << " ";
+	// alg2 = max_better_enumeration_subarray(numArray);
+	// cout << alg2.maxSum << " ";
 
-	alg3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
-	cout << alg3 << " ";
+	// alg3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
+	// cout << alg3 << " ";
 
-	alg4 = max_linear_subarray(numArray);
-	cout << alg4.maxSum << " ";
+	// alg4 = max_linear_subarray(numArray);
+	// cout << alg4.maxSum << " ";
 
     //open file for reading
 	ifstream inputfile("MSS_Problems.txt");
