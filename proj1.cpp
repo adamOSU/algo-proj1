@@ -57,7 +57,38 @@ int main(){
     //open file for reading
 	ifstream inputfile("MSS_Problems.txt");
 	if(inputfile.is_open()) {
-        
+        string line;	//line to be read from file
+		char * numline;	//c-string copy of line
+		char * num;		//number from line
+        while(getline(inputfile, line)) {
+			//rest variables
+			numline = NULL;
+			num = NULL;
+            
+            vector<int> numVec;
+            
+            //convert line to numline
+			numline = new char [line.size()+1];
+			strcpy (numline, line.c_str());
+            num = strtok (numline, " ,[]");
+			while (num != NULL) {
+				numVec.push_back(atoi(num));
+				num = strtok (NULL, " ,[]");
+			}
+            
+            alg1 = max_subarray_enumeration(numVec);
+            cout << alg1.maxSum << " ";
+
+            alg2 = max_better_enumeration_subarray(numVec);
+            cout << alg2.maxSum << " ";
+
+            alg3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
+            cout << alg3 << " ";
+
+            alg4 = max_linear_subarray(numVec);
+            cout << alg4.maxSum << " ";
+            
+        }
     } else {
 		cout <<"Unable to open file";
 	}
