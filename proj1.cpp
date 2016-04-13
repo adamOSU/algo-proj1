@@ -1,5 +1,7 @@
 #include <iostream>
-#include <string>
+#include <stdlib.h>
+#include <cstdlib>
+#include <string.h>
 #include <limits>
 #include <vector>
 #include <algorithm>
