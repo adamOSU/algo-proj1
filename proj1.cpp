@@ -87,7 +87,7 @@ int main(){
             subArr1 = max_subarray_enumeration(numVec);
 
             subArr2 = max_better_enumeration_subarray(numVec);
-
+            
             //subArr3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
 
             subArr4 = max_linear_subarray(numVec);
@@ -95,12 +95,12 @@ int main(){
             ofstream outputfile ("MSS_Results.txt", ios::app);
 			if(outputfile.is_open()) {
                 //print original array
-                outputfile << "Oritional Array:" <<endl;
+                outputfile << "Origional Array:" <<endl;
 				outputfile << "[ ";
 				for(int i=0; i< numVec.size(); i++) {
 					outputfile << numVec.at(i) << " ";
 				}
-				outputfile << "]" <<endl;
+				outputfile << "]\n" <<endl;
                 
                 //Algorithm 1
 				outputfile << "ALGORITHM 1:"<<endl;
@@ -163,7 +163,7 @@ SubArr max_subarray_enumeration(vector<int> arr){
         for(int j = i; j < arr.size(); j++){
             sum = 0;
 			for (int k = i; k <= j; k++) {
-                sum += arr[k];
+                sum += arr.at(k);
             }
             if(sum > best){
                 best = sum;
@@ -188,7 +188,7 @@ SubArr max_better_enumeration_subarray(vector<int> arr){
     for(int i = 0; i < arr.size(); i++){
 		sum = 0;
         for(int j = i; j < arr.size(); j++){
-            sum += arr[j];
+            sum += arr.at(j);
             if(sum > best){
                 best = sum;
                 testArr.leftIndex = i;
@@ -250,14 +250,14 @@ int max_divide_conquer_subarray(vector<int> arr, int left, int right){
 //Linear-time
 SubArr max_linear_subarray(vector<int> arr){
     //infinity from http://en.cppreference.com/w/cpp/types/numeric_limits/infinity
-    double max_sum = -std::numeric_limits<double>::infinity();
-    double ending_here_sum = -std::numeric_limits<double>::infinity();
-    double ending_here_high = 0;
-    double ending_here_low = 0;
+    int max_sum = -std::numeric_limits<double>::infinity();
+    int ending_here_sum = -std::numeric_limits<double>::infinity();
+    int ending_here_high = 0;
+    int ending_here_low = 0;
 	SubArr newArr;
 	
     for(int i = 0; i < arr.size(); i++){
-        ending_here_high = 0;
+        ending_here_high = i;
         if(ending_here_sum > 0){
             ending_here_sum = ending_here_sum + arr.at(i);
         }
@@ -265,11 +265,13 @@ SubArr max_linear_subarray(vector<int> arr){
             ending_here_low = i;
             ending_here_sum = arr.at(i);
         }
+        
         if(ending_here_sum > max_sum){
             max_sum = ending_here_sum;
             newArr.leftIndex = ending_here_low;
             newArr.rightIndex = ending_here_high;
         }
+        
     }
     newArr.maxSum = max_sum;
     return newArr;
