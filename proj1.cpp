@@ -45,17 +45,22 @@ int main(){
 	numArray.push_back(-23);
 	numArray.push_back(84);
 
-	// alg1 = max_subarray_enumeration(numArray);
-	// cout << alg1.maxSum << " ";
+	alg1 = max_subarray_enumeration(numArray);
+	cout << alg1.maxSum << " ";
 
-	// alg2 = max_better_enumeration_subarray(numArray);
-	// cout << alg2.maxSum << " ";
+	alg2 = max_better_enumeration_subarray(numArray);
+	cout << alg2.maxSum << " ";
 
-	// alg3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
-	// cout << alg3 << " ";
+	alg3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
+	cout << alg3 << " ";
 
-	// alg4 = max_linear_subarray(numArray);
-	// cout << alg4.maxSum << " ";
+	alg4 = max_linear_subarray(numArray);
+	cout << alg4.maxSum << " ";
+
+    SubArr subArr1;
+	SubArr subArr2;
+	//SubArr subArr3;
+	SubArr subArr4;
 
     //open file for reading
 	ifstream inputfile("MSS_Problems.txt");
@@ -83,55 +88,61 @@ int main(){
 
             subArr2 = max_better_enumeration_subarray(numVec);
 
-            subArr3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
+            //subArr3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
 
             subArr4 = max_linear_subarray(numVec);
             
             ofstream outputfile ("MSS_Results.txt", ios::app);
 			if(outputfile.is_open()) {
                 //print original array
-				outputfile << "[";
-				for(int i=0; i< numVec.size; i++) {
-					outputfile << numVec[i];
+                outputfile << "Oritional Array:" <<endl;
+				outputfile << "[ ";
+				for(int i=0; i< numVec.size(); i++) {
+					outputfile << numVec.at(i) << " ";
 				}
 				outputfile << "]" <<endl;
                 
                 //Algorithm 1
-				outputfile << "ALGORITHM 1: \n"<<endl;
-				outputfile << "[";
-				for (int i=subArr1.leftIdx; i<=subArr1.rightIdx; i++) {
-				outputfile << numVec[i];
+				outputfile << "ALGORITHM 1:"<<endl;
+				outputfile << "[ ";
+				for (int i=subArr1.leftIndex; i<=subArr1.rightIndex; i++) {
+				outputfile << numVec.at(i) << " ";
 				}
 				outputfile << "]" <<endl;
                 outputfile << subArr1.maxSum<<"\n"<<endl;
                 
                 //Algorithm 2
-				outputfile << "ALGORITHM 2: \n"<<endl;
-				outputfile << "[";
-				for (int i=subArr2.leftIdx; i<=subArr2.rightIdx; i++) {
-				outputfile << numVec[i];
+				outputfile << "ALGORITHM 2:"<<endl;
+				outputfile << "[ ";
+				for (int i=subArr2.leftIndex; i<=subArr2.rightIndex; i++) {
+				outputfile << numVec.at(i) << " ";
 				}
 				outputfile << "]" <<endl;
                 outputfile << subArr2.maxSum<<"\n"<<endl;
                 
-                //Algorithm 3
-				outputfile << "ALGORITHM 3: \n"<<endl;
-				outputfile << "[";
-				for (int i=subArr3.leftIdx; i<=subArr3.rightIdx; i++) {
-				outputfile << numVec[i];
-				}
-				outputfile << "]" <<endl;
-                outputfile << subArr4.maxSum<<"\n"<<endl;
+                // //Algorithm 3
+				// outputfile << "ALGORITHM 3:"<<endl;
+				// outputfile << "[ ";
+				// for (int i=subArr3.leftIndex; i<=subArr3.rightIndex; i++) {
+				// outputfile << numVec.at(i) << " ";
+				// }
+				// outputfile << "]" <<endl;
+                // outputfile << subArr4.maxSum<<"\n"<<endl;
                 
                 //Algorithm 4
-				outputfile << "ALGORITHM 4: \n"<<endl;
-				outputfile << "[";
-				for (int i=subArr4.leftIdx; i<=subArr4.rightIdx; i++) {
-				outputfile << numVec[i];
+				outputfile << "ALGORITHM 4:"<<endl;
+				outputfile << "[ ";
+				for (int i=subArr4.leftIndex; i<=subArr4.rightIndex; i++) {
+				outputfile << numVec.at(i) << " ";
 				}
-				outputfile << "]" <<endl;
+				outputfile << "]" << endl;
                 outputfile << subArr4.maxSum<<"\n"<<endl;
-            }
+            } else {
+				cout <<"Unable to open file";
+			}
+
+			outputfile << "------------------------------------------------\n"<<endl;
+			outputfile.close();
         }
     } else {
 		cout <<"Unable to open file";
@@ -256,11 +267,11 @@ SubArr max_linear_subarray(vector<int> arr){
         }
         if(ending_here_sum > max_sum){
             max_sum = ending_here_sum;
-            newArr.maxSum = max_sum;
             newArr.leftIndex = ending_here_low;
             newArr.rightIndex = ending_here_high;
         }
     }
+    newArr.maxSum = max_sum;
     return newArr;
 };
 
