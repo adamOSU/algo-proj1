@@ -67,23 +67,23 @@ int main(){
 	//SubArr subArr3;
 	SubArr subArr4;
 
-    //open file for reading
+    //open input file for reading
 	ifstream inputfile("MSS_Problems.txt");
 	if(inputfile.is_open()) {
         string line;	//line to be read from file
 		char * numline;	//c-string copy of line
 		char * num;		//number from line
         while(getline(inputfile, line)) {
-			//rest variables
 			numline = NULL;
 			num = NULL;
             
             vector<int> numVec;
             
-            //convert line to numline
+            
 			numline = new char [line.size()+1];
 			strcpy (numline, line.c_str());
-            num = strtok (numline, " ,[]");
+            //split each line into different numbers,disreagarding space, commas and brackets
+            num = strtok (numline, " ,[]");     
 			while (num != NULL) {
 				numVec.push_back(atoi(num));
 				num = strtok (NULL, " ,[]");
@@ -303,69 +303,83 @@ int countVec(vector<int> arr) {
 };
 
 void experimentalAnalysis(){
+    
     SubArr subArr1;
     SubArr subArr2;
     SubArr subArr3;
     SubArr subArr4;
     
-    clock_t alg1;
-    clock_t alg2;
-    clock_t alg3;
-    clock_t alg4;
+    //clock times for each algorithm
+    clock_t clock1;
+    clock_t clock2;
+    clock_t clock3;
+    clock_t clock4;
     
+    //average times for each array;
     int alg1_avg = 0;
     int alg2_avg = 0;
     int alg3_avg = 0;
     int alg4_avg = 0;
     
-    for(int i = 1; i <= 100; i*=2){
+    //number of arrays for each size
+    int x = 10;
+    
+    //generate sizes of 100,200,400...6400
+    for(int i = 1; i <= 64; i*=2){
         int n=i*100;
-        //10 arrays per count
-        for(int j=0; j<10; j++){
+        //10 arrays per size
+        for(int j=0; j<x; j++){
             vector<int> numArray (n);
             
-            //random array
+            //random array generator
             for(int k=0; k<n; k++){
                 numArray.at(k) = (rand() % (100 - (-100))) + (-100);
             }
 
             //algorithm 1
-            alg1 = clock();
-            subArr1 = max_subarray_enumeration(numArray);
-            alg1 = clock() - alg1;
-            alg1_avg += alg1;
+            clock1 = clock();     //start clock
+            subArr1 = max_subarray_enumeration(numArray);       //run algorithm
+            clock1 = clock() - clock1;      //stop clock
+            alg1_avg += clock1;       //add to average time
             
             //algorithm 2
-            alg2 = clock();
-            subArr2 = max_better_enumeration_subarray(numArray);
-            alg2 = clock() - alg2;
-            alg2_avg += alg2;
+            clock2 = clock();     //start clock
+            subArr2 = max_better_enumeration_subarray(numArray);        //run algorithm
+            clock2 = clock() - clock2;      //stop clock
+            alg2_avg += clock2;       //add to average time
             
             //algorithm 3
-            // alg3 = clock();
-            // subArr3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
-            // alg3 = clock() - alg3;
-            // alg3_avg += alg3;
+            // clock3 = clock();      //start clock
+            // subArr3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);      /run algorithm
+            // clock3 = clock() - clock3;   //stop clock
+            // alg3_avg += clock3;        //add to average time
             
             //algorithm 4
-            alg4 = clock();
-            subArr4 = max_linear_subarray(numArray);
-            alg4 = clock() - alg4;
-            alg4_avg += alg4;
+            clock4 = clock();     //start clock
+            subArr4 = max_linear_subarray(numArray);        //run algorithm
+            clock4 = clock() - clock4;      //stop clock
+            alg4_avg += clock4;       //add to average time
             
+            
+            //clear vector from memory
             numArray.clear();
             
         }
-        alg1_avg /= 10;
-        alg2_avg /= 10;
-        //alg3_avg /= 10;
-        alg4_avg /= 10;
         
-        cout<<"Algorithm 1, n="<<n<<": "<<((long double)alg1)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-        cout<<"Algorithm 2, n="<<n<<": "<<((long double)alg2)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-        //cout<<"Algorithm 3, n="<<n<<": "<<((double)alg3)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-        cout<<"Algorithm 4, n="<<n<<": "<<((long double)alg4)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
-
+        //average times
+        alg1_avg /= x;
+        alg2_avg /= x;
+        //alg3_avg /= x;
+        alg4_avg /= x;
+        
+        //print results
+        cout<<"Algorithm 1, n="<<n<<": "<<((long double)clock1)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 2, n="<<n<<": "<<((long double)clock2)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        //cout<<"Algorithm 3, n="<<n<<": "<<((double)clock3)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 4, n="<<n<<": "<<((long double)clock4)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        
+        
+        //reset averages
         alg1_avg = 0;
         alg2_avg = 0;
         alg3_avg = 0;
