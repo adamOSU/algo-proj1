@@ -259,11 +259,11 @@ SubArr max_linear_subarray(vector<int> arr){
     for(int i = 0; i < arr.size(); i++){
         ending_here_high = 0;
         if(ending_here_sum > 0){
-            ending_here_sum = ending_here_sum + arr[i];
+            ending_here_sum = ending_here_sum + arr.at(i);
         }
         else {
             ending_here_low = i;
-            ending_here_sum = arr[i];
+            ending_here_sum = arr.at(i);
         }
         if(ending_here_sum > max_sum){
             max_sum = ending_here_sum;
