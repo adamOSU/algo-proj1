@@ -79,18 +79,59 @@ int main(){
 				num = strtok (NULL, " ,[]");
 			}
             
-            alg1 = max_subarray_enumeration(numVec);
-            cout << alg1.maxSum << " ";
+            subArr1 = max_subarray_enumeration(numVec);
 
-            alg2 = max_better_enumeration_subarray(numVec);
-            cout << alg2.maxSum << " ";
+            subArr2 = max_better_enumeration_subarray(numVec);
 
-            alg3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
-            cout << alg3 << " ";
+            subArr3 = max_divide_conquer_subarray(numVec, 0, countVec(numVec) - 1);
 
-            alg4 = max_linear_subarray(numVec);
-            cout << alg4.maxSum << " ";
+            subArr4 = max_linear_subarray(numVec);
             
+            ofstream outputfile ("MSS_Results.txt", ios::app);
+			if(outputfile.is_open()) {
+                //print original array
+				outputfile << "[";
+				for(int i=0; i< numVec.size; i++) {
+					outputfile << numVec[i];
+				}
+				outputfile << "]" <<endl;
+                
+                //Algorithm 1
+				outputfile << "ALGORITHM 1: \n"<<endl;
+				outputfile << "[";
+				for (int i=subArr1.leftIdx; i<=subArr1.rightIdx; i++) {
+				outputfile << numVec[i];
+				}
+				outputfile << "]" <<endl;
+                outputfile << subArr1.maxSum<<"\n"<<endl;
+                
+                //Algorithm 2
+				outputfile << "ALGORITHM 2: \n"<<endl;
+				outputfile << "[";
+				for (int i=subArr2.leftIdx; i<=subArr2.rightIdx; i++) {
+				outputfile << numVec[i];
+				}
+				outputfile << "]" <<endl;
+                outputfile << subArr2.maxSum<<"\n"<<endl;
+                
+                //Algorithm 3
+				outputfile << "ALGORITHM 3: \n"<<endl;
+				outputfile << "[";
+				for (int i=subArr3.leftIdx; i<=subArr3.rightIdx; i++) {
+				outputfile << numVec[i];
+				}
+				outputfile << "]" <<endl;
+                outputfile << subArr4.maxSum<<"\n"<<endl;
+                
+                //Algorithm 4
+				outputfile << "ALGORITHM 4: \n"<<endl;
+				outputfile << "[";
+				for (int i=subArr4.leftIdx; i<=subArr4.rightIdx; i++) {
+				outputfile << numVec[i];
+				}
+				outputfile << "]" <<endl;
+                outputfile << subArr4.maxSum<<"\n"<<endl;
+            }
         }
     } else {
 		cout <<"Unable to open file";
