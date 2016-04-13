@@ -3,6 +3,7 @@
 #include <limits>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -52,6 +53,16 @@ int main(){
 
 	alg4 = max_linear_subarray(numArray);
 	cout << alg4.maxSum << " ";
+
+    //open file for reading
+	ifstream inputfile("MSS_Problems.txt");
+	if(inputfile.is_open()) {
+        
+    } else {
+		cout <<"Unable to open file";
+	}
+
+	inputfile.close();
 
     return 0;
 }
