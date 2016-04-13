@@ -7,6 +7,8 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <cmath>
+#include <time.h>
 
 using namespace std;
 
@@ -24,10 +26,11 @@ SubArr max_better_enumeration_subarray(vector<int>);
 int max_divide_conquer_subarray(vector<int>, int, int);
 SubArr max_linear_subarray(vector<int>);
 int countVec(vector<int>);
+void experimentalAnalysis();
 
 //main
 int main(){ 
-    
+        
 	SubArr alg1;
 	SubArr alg2;
 	int alg3;
@@ -44,7 +47,7 @@ int main(){
 	numArray.push_back(-93);
 	numArray.push_back(-23);
 	numArray.push_back(84);
-
+    
 	alg1 = max_subarray_enumeration(numArray);
 	cout << alg1.maxSum << " ";
 
@@ -55,8 +58,10 @@ int main(){
 	cout << alg3 << " ";
 
 	alg4 = max_linear_subarray(numArray);
-	cout << alg4.maxSum << " ";
-
+	cout << alg4.maxSum << " " << endl;;
+    
+    numArray.clear();
+    
     SubArr subArr1;
 	SubArr subArr2;
 	//SubArr subArr3;
@@ -137,10 +142,14 @@ int main(){
 				}
 				outputfile << "]" << endl;
                 outputfile << subArr4.maxSum<<"\n"<<endl;
+             
+                   
+  
             } else {
 				cout <<"Unable to open file";
 			}
-
+            
+            numVec.clear();
 			outputfile << "------------------------------------------------\n"<<endl;
 			outputfile.close();
         }
@@ -150,6 +159,9 @@ int main(){
 
 	inputfile.close();
 
+    experimentalAnalysis();
+    
+    
     return 0;
 }
 
@@ -288,4 +300,75 @@ int countVec(vector<int> arr) {
 	}
 
 	return total;
+};
+
+void experimentalAnalysis(){
+    SubArr subArr1;
+    SubArr subArr2;
+    SubArr subArr3;
+    SubArr subArr4;
+    
+    clock_t alg1;
+    clock_t alg2;
+    clock_t alg3;
+    clock_t alg4;
+    
+    int alg1_avg = 0;
+    int alg2_avg = 0;
+    int alg3_avg = 0;
+    int alg4_avg = 0;
+    
+    for(int i = 1; i <= 100; i*=2){
+        int n=i*100;
+        //10 arrays per count
+        for(int j=0; j<10; j++){
+            vector<int> numArray (n);
+            
+            //random array
+            for(int k=0; k<n; k++){
+                numArray.at(k) = (rand() % (100 - (-100))) + (-100);
+            }
+
+            //algorithm 1
+            alg1 = clock();
+            subArr1 = max_subarray_enumeration(numArray);
+            alg1 = clock() - alg1;
+            alg1_avg += alg1;
+            
+            //algorithm 2
+            alg2 = clock();
+            subArr2 = max_better_enumeration_subarray(numArray);
+            alg2 = clock() - alg2;
+            alg2_avg += alg2;
+            
+            //algorithm 3
+            // alg3 = clock();
+            // subArr3 = max_divide_conquer_subarray(numArray, 0, countVec(numArray) - 1);
+            // alg3 = clock() - alg3;
+            // alg3_avg += alg3;
+            
+            //algorithm 4
+            alg4 = clock();
+            subArr4 = max_linear_subarray(numArray);
+            alg4 = clock() - alg4;
+            alg4_avg += alg4;
+            
+            numArray.clear();
+            
+        }
+        alg1_avg /= 10;
+        alg2_avg /= 10;
+        //alg3_avg /= 10;
+        alg4_avg /= 10;
+        
+        cout<<"Algorithm 1, n="<<n<<": "<<((double)alg1)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 2, n="<<n<<": "<<((double)alg2)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        //cout<<"Algorithm 3, n="<<n<<": "<<((double)alg3)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+        cout<<"Algorithm 4, n="<<n<<": "<<((double)alg4)/(CLOCKS_PER_SEC/1000)<<" ms"<<endl;
+
+        alg1_avg = 0;
+        alg2_avg = 0;
+        alg3_avg = 0;
+        alg4_avg = 0;
+    }
 };
